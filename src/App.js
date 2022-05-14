@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 function App() {
   const [status, setStatus] = useState(true)
+  const [deviceTouchStatus, setDeviceTouchStatus] = useState(false)
   const arr = [
     {
       name:"Furniture",
@@ -87,9 +88,13 @@ function App() {
   ]
   const top = arr.slice(0,11)
   const bottom = arr.slice(12, arr.length)
-  console.log(arr.length)
+  console.log(window.matchMedia("(pointer: coarse)").matches)
+  useEffect(()=>{
+    setDeviceTouchStatus(window.matchMedia("(pointer: coarse)").matches)
+  },[])
   return (
     <>
+    { deviceTouchStatus?
     <div className='cat-comp'>
       <div className='comp-list'>
         <div className='top-cat'>
@@ -173,6 +178,10 @@ function App() {
         </div>
       </div>
     </div>
+    :<>
+    <p>Ping...Pong</p>
+    </>
+    }
     </>
   );
 }
